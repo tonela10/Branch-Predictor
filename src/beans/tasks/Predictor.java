@@ -1,8 +1,4 @@
-package task.task1;
-
-import javax.swing.text.DefaultEditorKit;
-
-import static task.task1.States.getInitialState;
+package beans.tasks;
 
 public class Predictor {
     private boolean initialPrediction = true;
@@ -11,7 +7,7 @@ public class Predictor {
         if (history.getHistory().isEmpty()) {
             return initialPrediction;
         }
-        return history.getHistory().get(history.getHistory().size() - 1);  // Acceso al último elemento
+        return history.getHistory().getLast();
     }
 
     public boolean twoBitPredict(BranchHistory history) {
@@ -19,8 +15,7 @@ public class Predictor {
             return States.getInitialState().getValue();
         }
 
-        // Asegúrate de que haya al menos un estado antes de acceder al último
-        States lastState = history.getHistoryStates().get(history.getHistoryStates().size() - 1);
+        States lastState = history.getHistoryStates().getLast();
         System.out.println("Estado:" + lastState);
         return lastState.getValue();
     }
@@ -31,17 +26,14 @@ public class Predictor {
     }
 
     public void updateStates(BranchHistory history, boolean actualOutcome) {
-        // Asegúrate de que hay al menos un estado antes de acceder
         if (history.getHistoryStates().isEmpty()) {
             history.addState(States.getInitialState());
             return;
         }
 
         // Obtener el último estado
-        States lastState = history.getHistoryStates().get(history.getHistoryStates().size() - 1);
+        States lastState = history.getHistoryStates().getLast();
 
-
-        // Actualizar el estado según el resultado real
         if (actualOutcome) {
             if (lastState == States.WEAKLY_TAKEN) {
                 history.addState(States.STRONGLY_TAKEN);

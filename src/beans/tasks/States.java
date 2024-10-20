@@ -1,4 +1,4 @@
-    package task.task1;
+    package beans.tasks;
 
     public enum States {
         STRONGLY_TAKEN(true),      // 11

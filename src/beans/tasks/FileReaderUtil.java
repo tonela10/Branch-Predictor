@@ -1,4 +1,4 @@
-package task.task1;
+package beans.tasks;
 
 
 import java.io.BufferedReader;

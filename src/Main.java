@@ -1,6 +1,6 @@
-import task.task1.BranchHistory;
-import task.task1.FileReaderUtil;
-import task.task1.Predictor;
+import beans.tasks.BranchHistory;
+import beans.tasks.FileReaderUtil;
+import beans.tasks.Predictor;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
