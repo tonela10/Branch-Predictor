@@ -16,23 +16,23 @@ public class BranchHistory {
 
     public void add(boolean outcome) {
         if (history.size() >= maxSize) {
-            history.removeFirst();  // Eliminar el primer elemento si excede el tamaño máximo
+            history.removeFirst();  // Delete the first in case is full
         }
         history.add(outcome);
     }
 
     public void addState(States outcome) {
         if (historyState.size() >= maxSize) {
-            historyState.removeFirst();  // Eliminar el primer elemento si excede el tamaño máximo
+            historyState.removeFirst();
         }
         historyState.add(outcome);
     }
 
     public LinkedList<Boolean> getHistory() {
-        return history;  // Devuelve la lista original en lugar de una copia
+        return history;
     }
 
     public LinkedList<States> getHistoryStates() {
-        return historyState;  // Devuelve la lista original en lugar de una copia
+        return historyState;
     }
 }

@@ -22,4 +22,21 @@
         public static States getInitialState() {
             return WEAKLY_TAKEN;  // Estado inicial predeterminado
         }
+
+        /* Possible improvement to make the code scalabe
+	    In this way i can update the States easily using the last outcome and actual state
+	    with just one function into the enum
+
+        public States nextValue(boolean taken) {
+            return switch (this) {
+                case STRONGLY_TAKEN if taken -> null;
+                case STRONGLY_TAKEN -> null;
+
+                    case WEAKLY_TAKEN -> null;
+                case WEAKLY_NOT_TAKEN -> null;
+                case STRONGLY_NOT_TAKEN -> null;
+            }
+
+         */
+
     }

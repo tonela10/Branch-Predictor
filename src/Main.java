@@ -11,29 +11,57 @@ public class Main {
     private static final int SIZE = 10;
 
     public static void main(String[] args) {
-        String traceFilePath = "docs/gcc-8M.txt";
+        String traceFilePath = "docs/gcc-10K.txt";
         FileReaderUtil fileReaderUtil = new FileReaderUtil(traceFilePath);
         BranchHistory branchHistory = new BranchHistory(SIZE);
         Predictor predictor = new Predictor();
 
-        fileReaderUtil.readFile((branchOutcome) -> {
-            // Usar predicción de 2 bits
-            boolean prediction = predictor.twoBitPredict(branchHistory);
+        /* Another possible implementation instead of use the readFile class and method
+        Files.readAllLines(Paths.get(traceFilePath)).stream()
+                .filter(l -> !l.endsWith("T"))
+                        .forEach(l -> System.out.println(l));
 
-            // Formatear el resultado para guardar en el archivo
+                        ...
+
+                        //I am learning about functional programming :)
+*/
+
+    // 1-bit predictor
+        fileReaderUtil.readFile((branchOutcome) -> {
+            boolean prediction = predictor.oneBitPredict(branchHistory);
+
             String result = "Prediction: " + (prediction ? "Taken" : "Not Taken") +
                     ", Actual: " + (branchOutcome ? "Taken" : "Not Taken") + "\n";
 
             System.out.println(result);
 
-            // Escribir el resultado en el archivo trace.txt
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("./docs/trace.txt", true))) {
+            // Write the result
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("./docs/trace-1-bit.txt", true))) {
                 writer.write(result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            // Actualizar los estados del predictor
+            // update the history
+            predictor.update(branchHistory, branchOutcome);
+        });
+
+        // 2-bit predictor
+        fileReaderUtil.readFile((branchOutcome) -> {
+            boolean prediction = predictor.twoBitPredict(branchHistory);
+
+            String result = "Prediction: " + (prediction ? "Taken" : "Not Taken") +
+                    ", Actual: " + (branchOutcome ? "Taken" : "Not Taken") + "\n";
+
+            System.out.println(result);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("./docs/trace-2-bit.txt", true))) {
+                writer.write(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // update the history of States
             predictor.updateStates(branchHistory, branchOutcome);
         });
     }

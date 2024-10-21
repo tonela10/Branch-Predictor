@@ -30,10 +30,9 @@ public class Predictor {
             history.addState(States.getInitialState());
             return;
         }
-
-        // Obtener el último estado
         States lastState = history.getHistoryStates().getLast();
 
+        // Probably was better do a switch case O_o
         if (actualOutcome) {
             if (lastState == States.WEAKLY_TAKEN) {
                 history.addState(States.STRONGLY_TAKEN);
